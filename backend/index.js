@@ -26,6 +26,15 @@ dotenv.config()
 
 conectarDB()
 
+// Routing
+// El app en express tiene acesso a .get .post .delete .use(Es el general)
+// app./lo que sea/(/ENDPOINT O RUTA/, /CALLBACK FUNCTION/)
+app.use('/api/usuarios', (req, res) => {
+    // .send envia datos a la pantalla
+    // res.json({ prueba: "Prueba" }) => Crea una API
+    res.send('Hola mundo del diablo')
+})
+
 // La varaible process.env.PORT se crea automáticamente en el servidor de producción, si no existe puerto 4000
 const PORT = process.env.PORT || 4000
 

@@ -1,5 +1,6 @@
 
 import mongoose from "mongoose";
+import bcrypt from "bcrypt"
 
 // Modelo Usuario
 // Esta es la manera en que se van a guardar en MongoDB

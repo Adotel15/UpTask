@@ -4,8 +4,9 @@
 import Express from "express";
 import conectarDB from "./config/db.js";
 // dotenv sirve para crear variables de entorno en Express.js
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import usuarioRoutes from "./routes/usuariosRoutes.js";
+import usuarioProyecto from "./routes/proyectoRoutes.js";
 
 // Cada vez que se hace un cambio aquí, en el servidor no se reeabre automáticamente
 // Para que si que lo haga automáticamente:
@@ -33,6 +34,7 @@ conectarDB()
 // app./lo que sea/(/ENDPOINT O RUTA/, /CALLBACK FUNCTION/)
 // Te lleva a /api/usuarios, y ejecuta el get post delete o lo que sea de usuariosRoutes
 app.use('/api/usuarios', usuarioRoutes)
+app.use('/api/proyectos', usuarioProyecto)
 
 // La varaible process.env.PORT se crea automáticamente en el servidor de producción, si no existe puerto 4000
 const PORT = process.env.PORT || 4000

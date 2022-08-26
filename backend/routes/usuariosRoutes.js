@@ -23,9 +23,10 @@ router.post("/", registrar); // Crea un nuevo Usuario
 router.post("/login", autenticar);
 router.get("/confirmar/:token", confirmar); // :token crea routing dinámico
 router.post("/olvide-password", olvidePassword)
-router.route("/olvide-password/:token")
-        .get(comprobarToken)
-        .post(nuevoPassword)
+router
+    .route("/olvide-password/:token")
+    .get(comprobarToken)
+    .post(nuevoPassword)
 
 // Cuando entras a /perfil, primero se ejecuta el middleware checkAuth para comprobar
 // si está autorizado, y luego llama a la función perfil

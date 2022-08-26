@@ -25,12 +25,12 @@ const proyectosSchema = mongoose.Schema({
     creador: {
         // El tipo de variable es el ObjectId del usuario en cuestión
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Usuario'
+        ref: "Usuario"
     },
     colaboradores: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Usuario'
+            ref: "Usuario"
         }
     ]
 },{

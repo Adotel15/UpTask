@@ -1,6 +1,12 @@
 
 import Express from 'express'
-import { registrar, autenticar } from '../controllers/usuarioController.js';
+import { 
+    registrar, 
+    autenticar, 
+    confirmar, 
+    olvidePassword, 
+    comprobarToken 
+} from '../controllers/usuarioController.js';
 
 // Router propio de express
 const router = Express.Router();
@@ -11,9 +17,10 @@ const router = Express.Router();
 
 // Autenticación, Registro y Confirmación de Usuarios
 router.post("/", registrar); // Crea un nuevo Usuario
-
-router.post("/login", autenticar)
-
+router.post("/login", autenticar);
+router.get("/confirmar/:token", confirmar); // :token crea routing dinámico
+router.post("/olvide-password", olvidePassword)
+router.get("/olvide-password/:token", comprobarToken)
 
 export default router;
 

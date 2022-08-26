@@ -1,6 +1,7 @@
 
-import Usuario from "../models/Usuario.js"
+import Usuario from "../models/Usuario.js";
 import generarID from "../helpers/generarID.js";
+import generarJWT from "../helpers/generarJWT.js";
 
 const registrar = async (req, res) => {
 
@@ -58,7 +59,8 @@ const autenticar = async (req, res) => {
             _id : usuario._id,
             nombre: usuario.nombre,
             email: usuario.email,
-            
+            token: generarJWT(usuario._id),
+
         })
     } else {
         const error = new Error("Contraseña incorrecta");
@@ -67,7 +69,79 @@ const autenticar = async (req, res) => {
 
 }
 
+const confirmar = async (req, res) => {
+    // req.params => Coge la variable que hay en la url dinámico, tendrá el nombre de :variable de la url
+    const { token } = req.params
+
+    const usuarioConfirmar = await Usuario.findOne({ token })
+
+    if(!usuarioConfirmar){
+        const error = new Error("Token no válido")
+        return res.status(403).json({ msg: error.message })
+    }
+
+    try {
+        usuarioConfirmar.confirmado = true;
+        usuarioConfirmar.token = "";
+        await usuarioConfirmar.save()
+        res.json({
+            msg: "Usuario Confirmado Correctamente"
+        })
+    } catch(error) {
+        console.log(error)
+    }
+}
+
+const olvidePassword = async (req, res) => {
+
+    const { email } = req.body
+
+    const usuario = await Usuario.findOne({
+        email
+    })
+    // Comprobar si el usuario existe
+    if(!usuario) {
+        const error = new Error("El usuario no existe");
+        return res.status(404).json({msg: error.message})
+    }
+     
+    try {
+
+        usuario.token = generarID()
+        await usuario.save()
+        res.json({
+            msg: "Mail enviado con las instrucciones"
+        })
+
+    } catch (error){
+        console.log(error)
+    }
+}
+
+const comprobarToken = async (req, res) => {
+
+    const { token } = req.params
+
+    const tokenValido = await Usuario.findOne({
+        token
+    })
+
+    if(tokenValido){
+        res.json({
+            msg: "Token válido y usuario existe"
+        })
+    } else {
+        const error = new Error("Token no válido")
+        return res.status(403).json({ msg: error.message })
+    }
+}
+
+
+
 export {
     registrar,
-    autenticar
+    autenticar,
+    confirmar,
+    olvidePassword,
+    comprobarToken
 }

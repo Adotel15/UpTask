@@ -1,6 +1,6 @@
 
 import Express from 'express'
-import { registrar } from '../controllers/usuarioController.js';
+import { registrar, autenticar } from '../controllers/usuarioController.js';
 
 // Router propio de express
 const router = Express.Router();
@@ -11,6 +11,8 @@ const router = Express.Router();
 
 // Autenticación, Registro y Confirmación de Usuarios
 router.post("/", registrar); // Crea un nuevo Usuario
+
+router.post("/login", autenticar)
 
 
 export default router;

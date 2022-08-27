@@ -7,6 +7,7 @@ import conectarDB from "./config/db.js";
 import dotenv from 'dotenv';
 import usuarioRoutes from "./routes/usuariosRoutes.js";
 import proyectoRoutes from "./routes/proyectoRoutes.js";
+import tareaRoutes from "./routes/tareaRoutes.js";
 
 // Cada vez que se hace un cambio aquí, en el servidor no se reeabre automáticamente
 // Para que si que lo haga automáticamente:
@@ -35,6 +36,7 @@ conectarDB()
 // Te lleva a /api/usuarios, y ejecuta el get post delete o lo que sea de usuariosRoutes
 app.use('/api/usuarios', usuarioRoutes)
 app.use('/api/proyectos', proyectoRoutes)
+app.use('/api/tareas', tareaRoutes)
 
 // La varaible process.env.PORT se crea automáticamente en el servidor de producción, si no existe puerto 4000
 const PORT = process.env.PORT || 4000

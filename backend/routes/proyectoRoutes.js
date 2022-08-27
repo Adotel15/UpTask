@@ -8,7 +8,6 @@ import {
     eliminarProyecto,
     agregarColaborador,
     eliminarColaborador,
-    obtenerTareas
 } from "../controllers/proyectoController.js"
 import checkAuth from "../middleware/checkAuth.js"
 
@@ -33,13 +32,6 @@ router
     .put(checkAuth, editarProyecto)
     // .delete para eliminar un proyecto, como que es un recurso completo es delete
     .delete(checkAuth, eliminarProyecto)
-
-/*//
-/////     Ruta /api/proyectos/tareas/:id
-*///
-
-router
-    .get("tareas/:id", checkAuth, obtenerTareas)
 
 /*//
 /////     Ruta /api/proyectos/agregar-colaborador/:id

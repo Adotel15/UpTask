@@ -1,6 +1,8 @@
 
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Alerta from '../components/Alerta'
+import axios from 'axios'
 
 const Registrar = () => {
 
@@ -8,6 +10,70 @@ const Registrar = () => {
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ repetirPassword, setRepetirPassword ] = useState('')
+
+    const [ alerta, setAlerta ] = useState('')
+
+    const handleSubmit = async e => {
+
+        e.preventDefault();
+
+        // Validaciones 
+        if( [nombre, email, password, repetirPassword].includes('') ){
+            setAlerta({
+                msg: 'Todos los campos son obligatorios',
+                error: true
+            })
+            return 
+        }
+
+        if (password !== repetirPassword) {
+            setAlerta({
+                msg: "Los passwords no coinciden",
+                error: true
+            })
+        }
+
+        if (password.length < 6) {
+            setAlerta({
+                msg: "Password poco seguro",
+                error: true
+            })
+        }
+
+        setAlerta({})
+
+        // Se han pasado las validaciones
+        try {
+            const { data } = await axios.post(` ${import.meta.env.VITE_BACKEND_URL}/api/usuarios`, 
+            {
+                nombre,
+                email,
+                password
+            })
+
+            setAlerta({
+                msg: data.msg,
+                error: false
+            })
+
+            // Ya se ha creado el usuario
+            setNombre('')
+            setEmail('')
+            setPassword('')
+            setRepetirPassword('')
+
+        } catch (error) {
+            // error.response coge el texto error que hemos puesto en el backend
+            setAlerta({
+                msg: error.response.data.msg,
+                error: true
+            })
+        }
+
+    }
+
+    // En caso de que existe msg se va a llenar
+    const { msg } = alerta
 
 
     return (
@@ -17,7 +83,12 @@ const Registrar = () => {
                 <span className = "text-slate-700"> Proyectos </span> 
             </h1>
 
-            <form className = "my-10 bg-white shadow rounded-lg p-10">
+            { msg && <Alerta alerta = {alerta} /> }
+
+            <form 
+                className = "my-10 bg-white shadow rounded-lg p-10"
+                onSubmit = {handleSubmit}
+            >
 
             <div className = "my-5">
                     <label 
@@ -31,7 +102,7 @@ const Registrar = () => {
                         type = "text"
                         placeholder = "Nombre de Usuario" 
                         className = "w-full mt-3 p-3 border rounded-xl bg-gray-50"
-                        input = { nombre }
+                        value = {nombre}
                         onChange = { e => setNombre(e.target.value)}
                     />
                 </div>
@@ -48,7 +119,7 @@ const Registrar = () => {
                         type = "email"
                         placeholder = "Email de Registro" 
                         className = "w-full mt-3 p-3 border rounded-xl bg-gray-50"
-                        input = { email }
+                        value = {email}
                         onChange = { e => setEmail(e.target.value)}
                     />
                 </div>
@@ -65,7 +136,7 @@ const Registrar = () => {
                         type = "password"
                         placeholder = "Introduce Password" 
                         className = "w-full mt-3 p-3 border rounded-xl bg-gray-50"
-                        input = { password }
+                        value = {password}
                         onChange = { e => setPassword(e.target.value)}
                     />
                 </div>
@@ -82,7 +153,7 @@ const Registrar = () => {
                         type = "password"
                         placeholder = "Repite el Password" 
                         className = "w-full mt-3 p-3 border rounded-xl bg-gray-50"
-                        input = { repetirPassword }
+                        value = {repetirPassword}
                         onChange = { e => setRepetirPassword(e.target.value)}
                     />
                 </div>

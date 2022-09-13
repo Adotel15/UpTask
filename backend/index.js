@@ -9,6 +9,8 @@ import usuarioRoutes from "./routes/usuariosRoutes.js";
 import proyectoRoutes from "./routes/proyectoRoutes.js";
 import tareaRoutes from "./routes/tareaRoutes.js";
 
+import cors from 'cors'
+
 // Cada vez que se hace un cambio aquí, en el servidor no se reeabre automáticamente
 // Para que si que lo haga automáticamente:
 //      - npm i -D nodemon
@@ -29,6 +31,26 @@ app.use(Express.json())
 dotenv.config()
 
 conectarDB()
+
+// Configurar Cors
+const whitelist = [process.env.FRONTEND_URL]
+
+const corsOptions = {
+    // Para detectar desde donde se esta haciendo la peticion el front
+    origin: function(origin, callback) {
+        // Si Whitelist incluye el origen url pasa la validacion
+        if(whitelist.includes(origin)){
+            // Le dejamos pasar, asi que no devolvemos ningun error, y acesso true
+            callback(null, true)
+        } else {
+            // Devolvemos error
+            callback(new Error ('Error de Cors'))
+
+        }
+    }
+}
+
+app.use(cors(corsOptions))
 
 // Routing
 // El app en express tiene acesso a .get .post .delete .use(Es el general)

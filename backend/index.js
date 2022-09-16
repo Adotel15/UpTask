@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 import usuarioRoutes from "./routes/usuariosRoutes.js";
 import proyectoRoutes from "./routes/proyectoRoutes.js";
 import tareaRoutes from "./routes/tareaRoutes.js";
-
+// Para autentificar desde que url llaman al servidor
 import cors from 'cors'
 
 // Cada vez que se hace un cambio aquí, en el servidor no se reeabre automáticamente
@@ -50,6 +50,7 @@ const corsOptions = {
     }
 }
 
+// Activar Cors
 app.use(cors(corsOptions))
 
 // Routing

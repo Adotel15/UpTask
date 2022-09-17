@@ -44,6 +44,7 @@ const Registrar = () => {
 
         // Se han pasado las validaciones
         try {
+            // TODO: Mover a cliente axios
             const { data } = await axios.post(` ${import.meta.env.VITE_BACKEND_URL}/api/usuarios`, 
             {
                 nombre,

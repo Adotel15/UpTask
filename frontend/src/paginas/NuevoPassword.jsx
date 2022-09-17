@@ -1,6 +1,28 @@
 
+import { useState, useEffect } from "react"
+import { useParams, Link } from "react-router-dom"
+import axios from "axios"
+import Alerta from "../components/Alerta"
 
 const NuevoPassword = () => {
+
+    const [ alerta, setAlerta ] = useState({})
+    const Params = useParams()
+
+    useEffect(() => {
+
+        const comprobarToken = async () => {
+
+            try {
+
+                await axios('http://localhost:4000/api/usuarios/olvide_password/')
+
+            } catch (error) {
+                setAlerta({})
+            }
+        }
+
+    }, [])
     
     return (
         <>

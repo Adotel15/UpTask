@@ -19,6 +19,8 @@ const ConfirmarCuenta = () => {
 
             try {
 
+                // TODO: Mover hacia env
+                // TODO: Mover a cliente axios
                 const url = `http://localhost:4000/api/usuarios/confirmar/${id}`
                 const { data } = await axios.get(url)
 

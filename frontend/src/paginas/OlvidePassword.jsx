@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import Alerta from '../components/Alerta'
+import axios from 'axios'
 
 
 const OlvidePassword = () => {
@@ -20,6 +21,27 @@ const OlvidePassword = () => {
             })
             return
         }
+
+        try {
+            
+            // TODO: Mover a cliente axios
+            const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios/olvide-password`,
+            { email })
+
+            console.log(data)
+
+            setAlerta({
+                msg: data.msg,
+                error: false
+            })
+
+        } catch (error) {
+            setAlerta({
+                msg: error.response.data.msg,
+                error: true
+            })
+    
+        }
     }
 
     const { msg } = alerta
@@ -31,7 +53,7 @@ const OlvidePassword = () => {
             <span className = "text-slate-700"> Proyectos </span> 
         </h1>
 
-        {alerta && <Alerta alerta = {alerta} /> }
+        {msg && <Alerta alerta = {alerta} /> }
 
         <form 
             className = "my-10 bg-white shadow rounded-lg p-10"

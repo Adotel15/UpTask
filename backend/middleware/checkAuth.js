@@ -37,8 +37,6 @@ const checkAuth = async (req, res, next) => {
         const error = new Error("Token no válido")
         return res.status(401).json({ msg: error.message })
     }
-
-
     next()
 }
 

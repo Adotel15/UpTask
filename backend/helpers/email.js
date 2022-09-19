@@ -7,13 +7,12 @@ const emailRegistro = async (datos) => {
     const { nombre, email, token } = datos
 
     // Usuario y Host para enviar los mails
-    // TODO: Mover hacia env
     const transport = nodemailer.createTransport({
-        host: "smtp.mailtrap.io",
-        port: 2525,
+        host: process.env.EMAIL_HOST,
+        port: process.env.EMAIL_PORT,
         auth: {
-          user: "b4ec2968a5887b",
-          pass: "c2522a70ccb7d8"
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
         }
       });
 
@@ -40,15 +39,14 @@ const emailOlvidePassword = async (datos) => {
   const { nombre, email, token } = datos
 
   // Usuario y Host para enviar los mails
-  // TODO: Mover hacia env
   const transport = nodemailer.createTransport({
-      host: "smtp.mailtrap.io",
-      port: 2525,
-      auth: {
-        user: "b4ec2968a5887b",
-        pass: "c2522a70ccb7d8"
-      }
-    });
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
 
     // Información del email, usa la url y credenciales de transport para enviar mail
     const info = await transport.sendMail({
@@ -65,7 +63,6 @@ const emailOlvidePassword = async (datos) => {
       <p>Si no eres el destinatario de este mensaje, puedes ignorar el mensaje. </p>
       `
     })
-
 }
 
 export {

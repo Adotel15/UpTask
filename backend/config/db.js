@@ -18,7 +18,7 @@ const conectarDB = async () => {
 
         const url = `${connection.connection.host}:${connection.connection.port}`
 
-        console.log(`MongoDB Conectado en: ${url}`)
+        console.log(`MongoDB Conectado a: ${url}`)
 
     } catch (error) {
 
@@ -26,8 +26,6 @@ const conectarDB = async () => {
         // process.exit es un comando de node para finalizar la ejecución en seco,
         //  normalmente se termina en 0, le pasamos 1 para saber que ha sido aquí el error
         process.exit(1);
-
-    } finally {
 
     }
 }

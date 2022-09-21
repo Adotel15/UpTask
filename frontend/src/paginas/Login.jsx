@@ -3,12 +3,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import Alerta from '../components/Alerta' 
 import clienteAxios from '../../config/clienteAxios'
+import useAuth from '../hooks/useAuth'
 
 const Login = () => {
 
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ alerta, setAlerta ] = useState({})
+
+    const { setAuth } = useAuth()
 
     const handleSubmit = async e => {
         e.preventDefault()
@@ -23,9 +26,15 @@ const Login = () => {
 
         try {
 
+            // Esto verifica que el usuario y contraseña sean correctos en el backend, nos devuelve el usuario con un token generado
             const { data } = await clienteAxios.post('/usuarios/login', {email, password})
+
             setAlerta({})
+
+            // Guaradamos el token en localstorage
             localStorage.setItem('token', data.token)
+            // Y ponemos el usuario en el contextAuth
+            setAuth(data)
 
         } catch (error) {
             setAlerta({

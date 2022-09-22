@@ -19,8 +19,8 @@ import { AuthProvider } from './context/AuthProvider'
 function App() {
 
     return (
-        <AuthProvider>
-            <BrowserRouter>
+        <BrowserRouter>
+            <AuthProvider>
                 <Routes>
                     <Route path = "/" element = { <AuthLayout /> }>
                         <Route index element = { <Login /> }/>
@@ -35,8 +35,9 @@ function App() {
                         <Route index element = { <Proyectos /> } />
                     </Route>
                 </Routes>
-            </BrowserRouter>
-        </AuthProvider>
+            </AuthProvider>
+        </BrowserRouter>
+        
     )
 }
 

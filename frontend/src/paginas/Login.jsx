@@ -13,6 +13,8 @@ const Login = () => {
 
     const { setAuth } = useAuth()
 
+    const navegador = useNavigate()
+
     const handleSubmit = async e => {
         e.preventDefault()
 
@@ -35,6 +37,10 @@ const Login = () => {
             localStorage.setItem('token', data.token)
             // Y ponemos el usuario en el contextAuth
             setAuth(data)
+
+            console.log(data)
+
+            navegador('/proyectos')
 
         } catch (error) {
             setAlerta({

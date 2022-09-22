@@ -17,7 +17,7 @@ const emailRegistro = async (datos) => {
       });
 
       // Información del email, usa la url y credenciales de transport para enviar mail
-      const info = await transport.sendMail({
+      await transport.sendMail({
         from: ' "UpTask - Administrador de Proyetos" <cuentas@uptask.com> ',
         to: email,
         subject: "UpTask - Confirmar Cuenta",
@@ -25,8 +25,8 @@ const emailRegistro = async (datos) => {
         html: `
         <p>Hola: ${nombre}. Confirma tu cuenta en UpTask </p>
 
-        <p> Tu cuenta ya está casi lista, solo debes comprobarla en el siguiente enlace:</p> 
-        <a href = "${process.env.FRONTEND_URL}/confirmar/${token}}">Validar Cuenta</a>
+        <p> Tu cuenta ya está casi lista, solo debes comprobarla en el siguiente enlace:</p>
+        <a href = "${process.env.FRONTEND_URL}/confirmar/${token}"> Validar Cuenta </a>
 
         <p>Si tu no creaste esta cuenta, puedes ignorar el mensaje. </p>
         `
@@ -49,7 +49,7 @@ const emailOlvidePassword = async (datos) => {
   });
 
     // Información del email, usa la url y credenciales de transport para enviar mail
-    const info = await transport.sendMail({
+    await transport.sendMail({
       from: ' "UpTask - Administrador de Proyetos" <cuentas@uptask.com> ',
       to: email,
       subject: "UpTask - Reestablece tu Password",
@@ -58,7 +58,7 @@ const emailOlvidePassword = async (datos) => {
       <p>Hola: ${nombre} has solicitado restablecer tu Password </p>
 
       <p>Entra en el siguiente enlace para reestablecer el Password: </p>
-      <a href = "${process.env.FRONTEND_URL}/olvide-password/${token}}"> Reestablecer Password</a>
+      <a href = "${process.env.FRONTEND_URL}/olvide-password/${token}"> Reestablecer Password</a>
 
       <p>Si no eres el destinatario de este mensaje, puedes ignorar el mensaje. </p>
       `

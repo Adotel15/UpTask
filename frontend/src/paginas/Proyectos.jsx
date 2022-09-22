@@ -1,11 +1,19 @@
 
+import useProyecto from "../hooks/useProyecto"
 
 const Proyectos = () => {
     
+    const { proyecto } = useProyecto()
+
+    
     return (
-        <div>
-            Proyectos
-        </div>
+        <>
+            <h1 className = "text-4xl font-black"> Proyectos </h1>
+            
+            <div>
+
+            </div>
+        </>
     )
 }
 

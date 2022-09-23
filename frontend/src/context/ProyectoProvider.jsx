@@ -83,16 +83,21 @@ const ProyectoProvider = ({ children }) => {
 
     const obtenerProyecto = async id => {
 
+        setCargando(true)
+
         const token = localStorage.getItem('token')
-        if(!token) return
+        if(!token){
+            setCargando(false)
+            return
+        }
+
+        
 
         const config = {
             headers: {
                 "Content-Type": "application/json",                    Authorization: `Bearer ${token}`
             }
         }
-
-        setCargando(true)
 
         try {
 

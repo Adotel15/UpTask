@@ -37,7 +37,7 @@ const EditarProyecto = () => {
 
     return (
         <div>
-            Editar Proyecto: {nombre}
+            <h1 className = "font-black text-4xl"> Editar Proyecto: { nombre } </h1>
         </div>
     )
 }

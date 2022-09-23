@@ -36,18 +36,12 @@ const AuthProvider = ({ children }) => {
             try {
                 // Esto es lo que nos devuelve el backend cuando le pasamos el token, nos devuelve el usuario
                 const { data } = await clienteAxios('/usuarios/perfil', config)
-                setAuth(data)
+                setAuth( data.usuario )
             } catch (error) {
-
                 setAuth({})
-
             } finally {
-
-                setTimeout(() => {
-                    setCargando(false)
-                    navegador('/proyectos')
-                }, 4000)
-                
+                setCargando(false)
+                navegador('/proyectos')
             }
         }
         return () => autenticarUsuario() 

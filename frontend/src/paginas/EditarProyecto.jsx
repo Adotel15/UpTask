@@ -2,6 +2,7 @@
 import useProyecto from "../hooks/useProyecto"
 import { useParams } from "react-router-dom"
 import { useEffect } from "react"
+import FormularioProyecto from "../components/FormularioProyecto"
 
 const EditarProyecto = () => {
 
@@ -36,9 +37,13 @@ const EditarProyecto = () => {
         </div>
 
     return (
-        <div>
+        <>
             <h1 className = "font-black text-4xl"> Editar Proyecto: { nombre } </h1>
-        </div>
+
+            <div className = "mt-10 flex justify-center">
+                <FormularioProyecto />
+            </div>
+        </>
     )
 }
 

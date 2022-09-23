@@ -8,8 +8,10 @@ const ProyectoContext = createContext()
 const ProyectoProvider = ({ children }) => {
 
     const [ proyectos, setProyectos ]  = useState([])
-    const [ alerta, setAlerta ] = useState([])
-
+    const [ alerta, setAlerta ] = useState({})
+    const [ proyecto, setProyecto ] = useState({})
+    const [ cargando, setCargando ] = useState(false)
+    
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -27,18 +29,14 @@ const ProyectoProvider = ({ children }) => {
                         Authorization: `Bearer ${token}`
                     }
                 }
-
                 const { data } = await clienteAxios.get('/proyectos', config)
-
                 setProyectos(data)
 
             } catch(error) {
-
+                setProyectos({})
             }
         }
-
         return () => obtenerProyectos()
-
     }, [])
 
     const mostrarAlerta = alerta => {
@@ -65,7 +63,8 @@ const ProyectoProvider = ({ children }) => {
 
             const { data } = await clienteAxios.post('/proyectos', proyecto, config);
 
-            console.log(data)
+            // Lo guardo directamente en el state para no tener que volver a consultar la Api cada vez
+            setProyectos([...proyecto, data])
 
             setAlerta({
                 msg: "Proyecto creado correctamente",
@@ -75,19 +74,49 @@ const ProyectoProvider = ({ children }) => {
             setTimeout(() => {
                 setAlerta({})
                 navigate('/proyectos')
-            }, 3000)
+            }, 2500)
 
         } catch(error) {
             console.log(error)
         }
     }
+
+    const obtenerProyecto = async id => {
+
+        const token = localStorage.getItem('token')
+        if(!token) return
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",                    Authorization: `Bearer ${token}`
+            }
+        }
+
+        setCargando(true)
+
+        try {
+
+            const { data } = await clienteAxios.get(`/proyectos/${id}`, config)
+
+            setProyecto( data )
+
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setCargando(false)
+        }
+    }
+
     return (
         <ProyectoContext.Provider
             value={{
                 mostrarAlerta,
                 alerta,
                 submitProyecto,
-                proyectos
+                proyectos, 
+                obtenerProyecto,
+                proyecto,
+                cargando
             }}
         >
             { children }

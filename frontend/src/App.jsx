@@ -5,14 +5,16 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AuthLayout from './layouts/AuthLayout'
 import RutaProtegida from './layouts/RutaProtegida'
 // Páginas
+// Login
 import Login from './paginas/Login'
 import Registrar from './paginas/Registrar'
 import OlvidePassword from './paginas/OlvidePassword'
 import NuevoPassword from './paginas/NuevoPassword'
 import ConfirmarCuenta from './paginas/ConfirmarCuenta'
-
+// Dentro de la App
 import Proyectos from './paginas/Proyectos'
 import NuevoProyecto from './paginas/NuevoProyecto'
+import Proyecto from './paginas/Proyecto'
 
 
 import { AuthProvider } from './context/AuthProvider'
@@ -38,6 +40,7 @@ function App() {
                         <Route path = '/proyectos' element = { <RutaProtegida /> }>
                             <Route index element = { <Proyectos /> } />
                             <Route path = "crear-proyecto" element = { <NuevoProyecto /> } />
+                            <Route path = ":id" element = { <Proyecto /> } />
                         </Route>
                     </Routes>
 

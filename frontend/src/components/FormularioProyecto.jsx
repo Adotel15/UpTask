@@ -24,7 +24,7 @@ const FormularioProyecto = () => {
             return
         }
 
-        await submitProyecto({ nombre, descripcion, fechaEntrega, cliente})
+        await submitProyecto({ nombre, descripcion, fechaEntrega, cliente })
 
         setNombre('')
         setDescripcion('')

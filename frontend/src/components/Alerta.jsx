@@ -1,7 +1,6 @@
 
 
 const Alerta = ({ alerta }) => {
-
     return (
         <div 
             className = 

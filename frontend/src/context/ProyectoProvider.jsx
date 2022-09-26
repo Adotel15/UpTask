@@ -217,7 +217,7 @@ const ProyectoProvider = ({ children }) => {
             console.log(data)
 
        } catch (error) {
-
+            console.log(error)
        }
         
     }

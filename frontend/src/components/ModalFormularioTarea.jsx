@@ -5,6 +5,7 @@ import Alerta from './Alerta'
 import useProyecto from '../hooks/useProyecto'
 import { useParams } from 'react-router-dom'
 
+// En el backend lo tenemos almacenado como ENUM y solo son estos valores
 const PRIORIDAD = ['Baja', 'Media', 'Alta']
 
 
@@ -31,6 +32,13 @@ const ModalFormularioTarea = () => {
         }
 
         submitTarea({ nombre, descripcion, prioridad, fechaEntrega, proyecto: params.id })
+
+        setNombre("")
+        setDescripcion("")
+        setPrioridad("")
+        setFechaEntrega("")
+
+        handleModalTarea()
     }
 
     const { msg } = alerta

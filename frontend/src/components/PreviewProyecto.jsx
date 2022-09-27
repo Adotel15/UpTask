@@ -7,11 +7,11 @@ const PreviewProyecto = ({ proyecto }) => {
 
     return (
         <div className = "border-b p-5 flex">
-            <p className = "flex-1">
+            <p className = "flex-1 font-bold">
                 { nombre }
 
-                <span className = "text-sm text-gray-500 uppercase">
-                    {' '} {cliente}
+                <span className = "text-xs text-gray-400 uppercase">
+                    {' * '}{cliente}
                 </span>
             </p>
 

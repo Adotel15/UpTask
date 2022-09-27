@@ -129,7 +129,7 @@ const ProyectoProvider = ({ children }) => {
     }
 
     const obtenerProyecto = async id => {
-
+        
         setCargando(true)
 
         const token = localStorage.getItem('token')
@@ -153,9 +153,12 @@ const ProyectoProvider = ({ children }) => {
 
         } catch (error) {
             console.log(error)
-        } finally {
-            setCargando(false)
-        }
+        } 
+
+       setCargando(false)
+        
+        
+        
     }
 
     const eliminarProyecto = async (id) => {

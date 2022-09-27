@@ -216,6 +216,16 @@ const ProyectoProvider = ({ children }) => {
 
             console.log(data)
 
+            // Agrega la tarea la state, cogemos una copia del proyecto que en esa pagina abierta tiene que estar en el state
+            // Añadimos la tarea a las tareas
+            // Seteamos al state del proyecto que está en pantalla que es el mismo que está en el state
+            const proyectoActualizado = { ...proyecto }
+
+            proyectoActualizado.tareas = [...proyecto.tareas, data]
+            setProyecto(proyectoActualizado)
+            setAlerta({})
+            setModalFormularioTarea(false)
+
        } catch (error) {
             console.log(error)
        }

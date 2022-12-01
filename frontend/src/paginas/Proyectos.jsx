@@ -9,9 +9,9 @@ const Proyectos = () => {
     
     return (
         <>
-            <h1 className = "text-4xl font-black"> Proyectos </h1>
+            <h1 className = "text-xl font-black"> Proyectos </h1>
             
-            <div className = "bg-white shadow mt-10 rounded-lg">
+            <div className = "bg-white shadow mt-10 rounded-lg border-black">
                 { proyectos.length ? 
                     proyectos.map( proyecto => (
                         <PreviewProyecto

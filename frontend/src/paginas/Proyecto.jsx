@@ -10,7 +10,7 @@ const Proyecto = () => {
 
     const par = useParams()
 
-    const { proyecto, cargando, handleModalTarea, obtenerProyecto} = useProyecto()
+    const { proyecto, cargando, handleModalTarea, obtenerProyecto } = useProyecto()
     
     const { nombre } = proyecto
 

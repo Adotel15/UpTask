@@ -12,7 +12,9 @@ const ProyectoProvider = ({ children }) => {
     const [ proyecto, setProyecto ] = useState({})
     const [ cargando, setCargando ] = useState(false)
     const [ modalFormularioTarea, setModalFormularioTarea ] = useState(false)
+    const [ tarea, setTarea ] = useState({})
     
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -199,6 +201,13 @@ const ProyectoProvider = ({ children }) => {
 
     const handleModalTarea = () => {
         setModalFormularioTarea(!modalFormularioTarea)
+        setTarea({})
+    }
+
+    const handleModalTareaEditar = tarea => {
+        setTarea(tarea)
+        setModalFormularioTarea(true)
+
     }
 
     const submitTarea = async tarea => {
@@ -248,7 +257,9 @@ const ProyectoProvider = ({ children }) => {
                 eliminarProyecto,
                 handleModalTarea,
                 modalFormularioTarea,
-                submitTarea
+                submitTarea,
+                handleModalTareaEditar,
+                tarea
             }}
         >
             { children }

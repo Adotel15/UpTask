@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import useProyecto from "../hooks/useProyecto"
 import { Link } from "react-router-dom"
 import ModalFormularioTarea from "../components/ModalFormularioTarea"
+import ModalEliminarTarea from "../components/ModalEliminarTarea"
 import Tarea from "../components/Tarea"
 
 const Proyecto = () => {
@@ -77,7 +78,7 @@ const Proyecto = () => {
                 Tareas del Proyecto
             </p>
 
-            <div classname = "bg-white shadow mt-10 rounded-lg">
+            <div className = "bg-white shadow mt-10 rounded-lg">
                 {
                     proyecto.tareas?.length ?
                         proyecto.tareas?.map ( tarea => (
@@ -91,6 +92,7 @@ const Proyecto = () => {
             </div>
 
             <ModalFormularioTarea />
+            <ModalEliminarTarea />
         </>
     )
 }

@@ -18,9 +18,7 @@ const Proyecto = () => {
 
     
     useEffect(() => {
-
        obtenerProyecto(par.id)
-
     }, [])
     
 

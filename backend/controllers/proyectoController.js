@@ -118,7 +118,18 @@ const eliminarProyecto = async (req, res) => {
     
 }
 
+const buscarColaborador = async (req, res) => {
+    
+}
+
 const agregarColaborador = async (req, res) => {
+
+    try {
+
+    } catch(error) {
+        console.log(error.response)
+    }
+
     
 }
 
@@ -134,4 +145,5 @@ export {
     eliminarProyecto,
     agregarColaborador,
     eliminarColaborador,
+    buscarColaborador
 }

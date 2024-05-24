@@ -1,16 +1,14 @@
+export const formatearFecha = (fecha) => {
+    const nuevaFecha = new Date(fecha);
 
-export const formatearFecha = fecha => {
-
-    const nuevaFecha = new Date(fecha)
-
-    fecha.split('T')[0].split('-')
+    fecha.split('T')[0].split('-');
 
     const opciones = {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
-        day: 'numeric'
-    }
+        day: 'numeric',
+    };
 
-    return nuevaFecha.toLocaleDateString('es-ES', opciones)
-}
+    return nuevaFecha.toLocaleDateString('es-ES', opciones);
+};

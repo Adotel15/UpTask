@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  content: ["index.html", "./src/**/*.jsx"],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+    content: ['index.html', './src/**/*.jsx'],
+    theme: {
+        extend: {},
+    },
+    plugins: [],
+};
 
 /*                      Instalar TailwindCSS                         */
 /*  1.  npm i -D tailwindcss postcss autoprefixer                    */

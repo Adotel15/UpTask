@@ -1,5 +1,4 @@
-
-import Express from "express"
+import Express from 'express';
 import {
     obtenerProyectos,
     nuevoProyecto,
@@ -8,26 +7,26 @@ import {
     eliminarProyecto,
     agregarColaborador,
     eliminarColaborador,
-    buscarColaborador
-} from "../controllers/proyectoController.js"
-import checkAuth from "../middleware/checkAuth.js"
+    buscarColaborador,
+} from '../controllers/proyectoController.js';
+import checkAuth from '../middleware/checkAuth.js';
 
-const router = Express.Router()
+const router = Express.Router();
 
 router
-    .route("/")
+    .route('/')
     .get(checkAuth, obtenerProyectos)
-    .post(checkAuth, nuevoProyecto)
+    .post(checkAuth, nuevoProyecto);
 
 router
-    .route("/:id")
+    .route('/:id')
     .get(checkAuth, obtenerProyecto)
     .put(checkAuth, editarProyecto)
-    .delete(checkAuth, eliminarProyecto)
+    .delete(checkAuth, eliminarProyecto);
 
 router
-    .post("/colaboradores", checkAuth, buscarColaborador)
-    .post("/colaboradores/:id", checkAuth, agregarColaborador)
-    .delete("/colaboradores/:id", checkAuth, eliminarColaborador)
+    .post('/colaboradores', checkAuth, buscarColaborador)
+    .post('/colaboradores/:id', checkAuth, agregarColaborador)
+    .delete('/colaboradores/:id', checkAuth, eliminarColaborador);
 
 export default router;

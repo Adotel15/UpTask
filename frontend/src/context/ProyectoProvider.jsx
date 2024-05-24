@@ -14,7 +14,7 @@ const ProyectoProvider = ({ children }) => {
     const [ modalFormularioTarea, setModalFormularioTarea ] = useState(false)
     const [ modalEliminarTarea, setModalEliminarTarea ] = useState(false)
     const [ tarea, setTarea ] = useState({})
-    
+    const [ stateVim, setStateVim ] = useState({})
 
     const navigate = useNavigate()
 

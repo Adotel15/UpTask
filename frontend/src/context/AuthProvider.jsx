@@ -1,68 +1,57 @@
+import { useState, useEffect, createContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import clienteAxios from '../../config/clienteAxios';
 
-import { useState, useEffect, createContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import clienteAxios from '../../config/clienteAxios'
-
-const AuthContext = createContext()
+const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+    const [auth, setAuth] = useState({});
+    const [cargando, setCargando] = useState(true);
 
-    const [ auth, setAuth ] = useState({})
-    const [ cargando, setCargando ] = useState(true)
+    const navegador = useNavigate();
 
-    const navegador = useNavigate() 
-
-    // Este useEffect es para cuando se cargue la pagina mire si hay un token en el localstorage y entre directamente
     useEffect(() => {
-
         const autenticarUsuario = async () => {
+            const token = localStorage.getItem('token');
 
-            const token = localStorage.getItem('token')
-
-            if(!token) {
-                setCargando(false)
-                return
+            if (!token) {
+                setCargando(false);
+                return;
             }
 
-            // Para enviar la Auth junto con el request Http se necesita config que tenga headers
-            // En nuestra app es Bearer
             const config = {
                 headers: {
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
-            }
+                    'Content-type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            };
 
             try {
-                // Esto es lo que nos devuelve el backend cuando le pasamos el token, nos devuelve el usuario
-                const { data } = await clienteAxios('/usuarios/perfil', config)
-                setAuth( data.usuario )
+                const { data } = await clienteAxios('/usuarios/perfil', config);
+                setAuth(data.usuario);
             } catch (error) {
-                setAuth({})
+                setAuth({});
             } finally {
-                setCargando(false)
-                navegador('/proyectos')
+                setCargando(false);
+                navegador('/proyectos');
             }
-        }
-        return () => autenticarUsuario() 
-    }, [])
-
+        };
+        return () => autenticarUsuario();
+    }, []);
 
     return (
         <AuthContext.Provider
-            value = {{
+            value={{
                 setAuth,
-                auth, 
-                cargando
+                auth,
+                cargando,
             }}
         >
-            { children }
+            {children}
         </AuthContext.Provider>
-    )
-}
+    );
+};
 
-export {
-    AuthProvider
-}
+export { AuthProvider };
 
 export default AuthContext;

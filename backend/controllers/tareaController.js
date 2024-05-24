@@ -1,127 +1,104 @@
-
-import Proyecto from "../models/Proyectos.js"
-import Tarea from "../models/Tarea.js"
-
+import Proyecto from '../models/Proyectos.js';
+import Tarea from '../models/Tarea.js';
 
 const agregarTarea = async (req, res) => {
-
-    const { proyecto } = req.body
+    const { proyecto } = req.body;
 
     const existeProyecto = await Proyecto.findById(proyecto);
 
-    if(!existeProyecto){
-        const error = new Error("El proyecto no existe")
-        return res.status(404).json({ msg: error.message })
+    if (!existeProyecto) {
+        const error = new Error('El proyecto no existe');
+        return res.status(404).json({ msg: error.message });
     }
 
-    if(existeProyecto.creador.toString() !== req.usuario._id.toString()){
-        const error = new Error("No tienes permisos")
-        return res.status(403).json({ msg: error.message })
+    if (existeProyecto.creador.toString() !== req.usuario._id.toString()) {
+        const error = new Error('No tienes permisos');
+        return res.status(403).json({ msg: error.message });
     }
 
-    try{
+    try {
+        const tareaAlmacenada = await Tarea.create(req.body);
+        existeProyecto.tareas.push(tareaAlmacenada._id);
+        await existeProyecto.save();
 
-        const tareaAlmacenada = await Tarea.create(req.body)
-        // ALmacenar el ID en el proyecto
-        existeProyecto.tareas.push(tareaAlmacenada._id)
-        await existeProyecto.save()
-
-        res.json(tareaAlmacenada)
-
+        res.json(tareaAlmacenada);
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-}
+};
 
 const obtenerTarea = async (req, res) => {
+    const { id } = req.params;
+    const tarea = await Tarea.findById(id).populate('proyecto');
 
-    const { id } = req.params
-    // .populate busca desde la variable proyecto, el proyecto que coincide y lo trae dentro de un objeto en tarea.proyecto
-    const tarea = await Tarea.findById(id).populate("proyecto")
-
-    if(!tarea){
-        const error = new Error("No existe tarea")
-        return res.status(404).json({ msg: error.message })
+    if (!tarea) {
+        const error = new Error('No existe tarea');
+        return res.status(404).json({ msg: error.message });
     }
 
-    if(tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
-        const error = new Error("No tienes permisos")
-        return res.status(403).json({ msg: error.message })
+    if (tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
+        const error = new Error('No tienes permisos');
+        return res.status(403).json({ msg: error.message });
     }
 
-    res.json(tarea)
-    
-}
+    res.json(tarea);
+};
 
 const actualizarTarea = async (req, res) => {
+    const { id } = req.params;
+    const tarea = await Tarea.findById(id).populate('proyecto');
 
-    const { id } = req.params
-    // .populate busca desde la variable proyecto, el proyecto que coincide y lo trae dentro de un objeto en tarea.proyecto
-    const tarea = await Tarea.findById(id).populate("proyecto")
-
-    if(!tarea){
-        const error = new Error("No existe tarea")
-        return res.status(404).json({ msg: error.message })
+    if (!tarea) {
+        const error = new Error('No existe tarea');
+        return res.status(404).json({ msg: error.message });
     }
 
-    if(tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
-        const error = new Error("No tienes permisos")
-        return res.status(403).json({ msg: error.message })
+    if (tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
+        const error = new Error('No tienes permisos');
+        return res.status(403).json({ msg: error.message });
     }
 
-    tarea.nombre = req.body.nombre || tarea.nombre
-    tarea.descripcion = req.body.descripcion || tarea.descripcion
-    tarea.prioridad = req.body.prioridad || tarea.prioridad
-    tarea.fechaEntrega = req.body.fechaEntrega || tarea.fechaEntrega
+    tarea.nombre = req.body.nombre || tarea.nombre;
+    tarea.descripcion = req.body.descripcion || tarea.descripcion;
+    tarea.prioridad = req.body.prioridad || tarea.prioridad;
+    tarea.fechaEntrega = req.body.fechaEntrega || tarea.fechaEntrega;
 
     try {
-
-        const tareaAlmacenada = await tarea.save()
-        res.json(tareaAlmacenada)
-
-
-    } catch(error) {
-        console.log(error)
+        const tareaAlmacenada = await tarea.save();
+        res.json(tareaAlmacenada);
+    } catch (error) {
+        console.log(error);
     }
-
-    
-}
+};
 
 const eliminarTarea = async (req, res) => {
+    const { id } = req.params;
+    const tarea = await Tarea.findById(id).populate('proyecto');
 
-    const { id } = req.params
-    // .populate busca desde la variable proyecto, el proyecto que coincide y lo trae dentro de un objeto en tarea.proyecto
-    const tarea = await Tarea.findById(id).populate("proyecto")
-
-    if(!tarea){
-        const error = new Error("No existe tarea")
-        return res.status(404).json({ msg: error.message })
+    if (!tarea) {
+        const error = new Error('No existe tarea');
+        return res.status(404).json({ msg: error.message });
     }
 
-    if(tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
-        const error = new Error("No tienes permisos")
-        return res.status(403).json({ msg: error.message })
+    if (tarea.proyecto.creador.toString() !== req.usuario._id.toString()) {
+        const error = new Error('No tienes permisos');
+        return res.status(403).json({ msg: error.message });
     }
 
     try {
-
-        await tarea.deleteOne()
-        res.json({ msg: "Tarea Eliminada" })
-
-    } catch(error) {
-        console.log(error)
+        await tarea.deleteOne();
+        res.json({ msg: 'Tarea Eliminada' });
+    } catch (error) {
+        console.log(error);
     }
-    
-}
+};
 
-const cambiarEstado = async (req, res) => {
-    
-}
+const cambiarEstado = async (req, res) => {};
 
-export{
+export {
     agregarTarea,
     obtenerTarea,
     actualizarTarea,
     eliminarTarea,
-    cambiarEstado
-}
+    cambiarEstado,
+};

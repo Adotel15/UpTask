@@ -1,10 +1,11 @@
 import { Fragment, useState, useEffect } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import Alerta from './Alerta';
-import useProyecto from '../hooks/useProyecto';
 import { useParams } from 'react-router-dom';
+import { Dialog, Transition } from '@headlessui/react';
 
-// En el backend lo tenemos almacenado como ENUM y solo son estos valores
+import Alerta from './Alerta';
+
+import useProyecto from '../hooks/useProyecto';
+
 const PRIORIDAD = ['Baja', 'Media', 'Alta'];
 
 const ModalFormularioTarea = () => {
@@ -15,12 +16,12 @@ const ModalFormularioTarea = () => {
     const [fechaEntrega, setFechaEntrega] = useState('');
 
     const {
+        tarea,
+        alerta,
         modalFormularioTarea,
         handleModalTarea,
         mostrarAlerta,
-        alerta,
         submitTarea,
-        tarea,
     } = useProyecto();
 
     useEffect(() => {
@@ -112,7 +113,7 @@ const ModalFormularioTarea = () => {
                             <div className="hidden sm:block absolute top-0 right-0 pt-4 pr-4">
                                 <button
                                     type="button"
-                                    className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    className="bg-white rounded-md text-gray-400 hover:text-gray-500"
                                     onClick={handleModalTarea}
                                 >
                                     <span className="sr-only">Cerrar</span>

@@ -2,49 +2,56 @@ import { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clienteAxios from '../../config/clienteAxios';
 
-const AuthContext = createContext();
+const AuthContext = createContext({
+    auth: {},
+    cargando: true,
+    setAuth: () => {},
+});
 
 const AuthProvider = ({ children }) => {
-    const [auth, setAuth] = useState({});
     const [cargando, setCargando] = useState(true);
+    const [auth, setAuth] = useState({});
 
     const navegador = useNavigate();
 
     useEffect(() => {
-        const autenticarUsuario = async () => {
-            const token = localStorage.getItem('token');
+        autenticarUsuario();
+    }, []);
 
-            if (!token) {
-                setCargando(false);
-                return;
-            }
+    const autenticarUsuario = async () => {
+        const token = localStorage.getItem('token');
 
-            const config = {
+        if (!token) {
+            setCargando(false);
+            return;
+        }
+
+        try {
+            const { data } = await clienteAxios('/usuarios/perfil', {
                 headers: {
                     'Content-type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-            };
+            });
 
-            try {
-                const { data } = await clienteAxios('/usuarios/perfil', config);
-                setAuth(data.usuario);
-            } catch (error) {
-                setAuth({});
-            } finally {
-                setCargando(false);
+            setAuth(data.usuario);
+        } catch (error) {
+            setAuth({});
+        } finally {
+            setCargando(false);
+
+            if (!window.location.pathname.includes('proyectos')) {
                 navegador('/proyectos');
             }
-        };
-        return () => autenticarUsuario();
-    }, []);
+        }
+    };
 
     return (
         <AuthContext.Provider
             value={{
-                setAuth,
                 auth,
                 cargando,
+                setAuth,
             }}
         >
             {children}

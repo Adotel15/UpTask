@@ -14,19 +14,19 @@ app.use(express.json());
 
 conectarDB();
 
-const whitelist = [process.env.FRONTEND_URL];
+// const whitelist = [process.env.FRONTEND_URL];
 
-const corsOptions = {
-    origin: function (origin, callback) {
-        if (whitelist.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Error de Cors'));
-        }
-    },
-};
+// const corsOptions = {
+//     origin: function (origin, callback) {
+//         if (whitelist.includes(origin)) {
+//             callback(null, true);
+//         } else {
+//             callback(new Error('Error de Cors'));
+//         }
+//     },
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/proyectos', proyectoRoutes);

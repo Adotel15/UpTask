@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+
 import useProyecto from '../hooks/useProyecto';
-import { Link } from 'react-router-dom';
-import ModalFormularioTarea from '../components/ModalFormularioTarea';
-import ModalEliminarTarea from '../components/ModalEliminarTarea';
+
 import Alerta from '../components/Alerta';
 import Tarea from '../components/Tarea';
+import ModalFormularioTarea from '../components/ModalFormularioTarea';
+import ModalEliminarTarea from '../components/ModalEliminarTarea';
 
 const Proyecto = () => {
     const par = useParams();
 
-    const { proyecto, cargando, handleModalTarea, obtenerProyecto, alerta } =
+    const { cargando, handleModalTarea, obtenerProyecto, alerta, proyecto } =
         useProyecto();
 
     const { nombre } = proyecto;
@@ -18,8 +19,6 @@ const Proyecto = () => {
     useEffect(() => {
         obtenerProyecto(par.id);
     }, []);
-
-    // Carga tan rápido que la animación estropea la transición
 
     if (cargando) return;
     <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">

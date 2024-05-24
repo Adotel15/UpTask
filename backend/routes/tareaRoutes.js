@@ -11,7 +11,6 @@ import {
 
 const router = Express.Router();
 
-//
 router.post('/', checkAuth, agregarTarea);
 
 router

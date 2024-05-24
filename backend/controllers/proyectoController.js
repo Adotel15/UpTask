@@ -94,7 +94,13 @@ const eliminarProyecto = async (req, res) => {
     }
 };
 
-const buscarColaborador = async (req, res) => {};
+const buscarColaborador = async (req, res) => {
+    try {
+        console.log(req.body);
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 const agregarColaborador = async (req, res) => {
     try {

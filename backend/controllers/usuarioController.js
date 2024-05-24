@@ -1,9 +1,11 @@
 import Usuario from '../models/Usuario.js';
+
 import generarID from '../helpers/generarID.js';
 import generarJWT from '../helpers/generarJWT.js';
 import { emailRegistro, emailOlvidePassword } from '../helpers/email.js';
 
 const registrar = async (req, res) => {
+    console.log('llega');
     const { email } = req.body;
     const existeUsuario = await Usuario.findOne({
         email,
@@ -20,12 +22,18 @@ const registrar = async (req, res) => {
 
         await usuario.save();
 
-        emailRegistro({
+        // emailRegistro({
+        //     email: usuario.email,
+        //     nombre: usuario.nombre,
+        //     token: usuario.token,
+        // });
+
+        console.log({
             email: usuario.email,
             nombre: usuario.nombre,
             token: usuario.token,
         });
-        res.json({
+        return res.status(200).json({
             msg: 'Usuario Creado Correctamente. Revisa tu email para confirmar cuenta',
         });
     } catch (error) {
@@ -79,7 +87,7 @@ const confirmar = async (req, res) => {
         usuarioConfirmar.confirmado = true;
         usuarioConfirmar.token = '';
         await usuarioConfirmar.save();
-        res.json({
+        return res.status(200).json({
             msg: 'Usuario Confirmado Correctamente',
         });
     } catch (error) {

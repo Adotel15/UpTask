@@ -12,12 +12,13 @@ import checkAuth from '../middleware/checkAuth.js';
 
 const router = Express.Router();
 
-router.post('/', registrar);
 router.post('/login', autenticar);
+router.get('/perfil', checkAuth, perfil);
+
+router.post('/', registrar);
 router.get('/confirmar/:token', confirmar);
+
 router.post('/olvide-password', olvidePassword);
 router.route('/olvide-password/:token').get(comprobarToken).post(nuevoPassword);
-
-router.get('/perfil', checkAuth, perfil);
 
 export default router;
